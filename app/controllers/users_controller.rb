@@ -13,9 +13,13 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
+  def favorites
+    @user = User.find(params[:id])
+    @favorites = Favorite.where(user_id: @user.id)
+  end
   private
   def user_params
-    params.require(:user).permit(:name, :email, :password,
+    params.require(:user).permit(:name, :email, :password, :content, :image,
                                  :password_confirmation)
   end
 end

@@ -10,13 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_063747) do
+ActiveRecord::Schema.define(version: 2020_09_11_082516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "picture_id"
+  end
+
   create_table "pictures", force: :cascade do |t|
     t.text "image"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -29,6 +35,8 @@ ActiveRecord::Schema.define(version: 2020_09_10_063747) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "content"
+    t.text "image"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

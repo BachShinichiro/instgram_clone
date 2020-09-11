@@ -4,8 +4,13 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
-  resources :users, only: [:new, :create, :edit, :update, :show]
+  resources :users do
+    member do
+      get :favorites
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
+  resources :favorites, only: [:create, :destroy]
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
 end
