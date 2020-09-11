@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
+  root 'sessions#new'
   resources :users do
     member do
       get :favorites

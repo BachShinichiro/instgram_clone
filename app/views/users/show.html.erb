@@ -1,3 +1,7 @@
 <h1><%= @user.name %>のページ</h1>
+<%= image_tag @user.image.url %>
 <p>メールアドレス: <%= @user.email %></p>
 <p><%= link_to 'お気に入り一覧', favorites_user_path %></p>
+<%= link_to 'Back', pictures_path %>
+<%= link_to 'Edit', edit_user_path(@user), style: "#{'display:none' unless @user.id == current_user.id}" %>
+<%= link_to 'Destroy', user_path(@user), method: :delete, style: "#{'display:none' unless @user.id == current_user.id}" %>
