@@ -1,5 +1,7 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
+  before_action :current_user
+  before_action :authenticate_user
 
   def index
     @pictures = Picture.all
@@ -28,6 +30,7 @@ class PicturesController < ApplicationController
     @picture = current_user.pictures.build(picture_params)
     respond_to do |format|
       if @picture.save
+        PictureMailer.picture_mail(@picture).deliver
         format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
         format.json { render :show, status: :created, location: @picture }
       else
@@ -62,6 +65,6 @@ class PicturesController < ApplicationController
     @picture = Picture.find(params[:id])
   end
   def picture_params
-    params.require(:picture).permit(:image, :image_cache)
+    params.require(:picture).permit(:image, :image_cache, :content)
   end
 end
