@@ -15,6 +15,13 @@
     <% if logged_in? %>
       <%= link_to "Profile", user_path(current_user.id) %>
       <%= link_to "Logout", session_path(current_user.id), method: :delete %>
+        <% if current_user.image == nil %>
+          <%= link_to image_tag("default.png", :size => "30x30"), user_path(current_user.id) ,class:"links btn"%>
+        <% else %>
+          <%= link_to user_path(@current_user.id), id: "icon_link" do %>
+            <%= image_tag @current_user.image.thumb.url, class: "icon" %>
+          <% end %>
+        <% end %>
     <% else %>
       <%= link_to "Sign up", new_user_path %>
       <%= link_to "Login", new_session_path %>
