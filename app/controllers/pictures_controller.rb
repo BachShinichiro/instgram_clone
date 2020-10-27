@@ -2,6 +2,7 @@ class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
   before_action :current_user
   before_action :authenticate_user
+  before_action :check_user, only: [:edit, :update, :destroy]
 
   def index
     @pictures = Picture.all
@@ -67,5 +68,11 @@ class PicturesController < ApplicationController
   end
   def picture_params
     params.require(:picture).permit(:image, :image_cache, :content)
+  end
+  def check_user
+    if current_user != @user
+      flash[:notice] = '他のユーザーの投稿は修正できません'
+      redirect_to pictures_path 
+    end
   end
 end
