@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user, only: [:show, :edit, :update, :destroy]
+  def index
+    @user = User.all
+  end
   def new
     @user = User.new
   end
@@ -17,7 +20,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   def edit
-
   end
   def update
      if @user.update(user_params)
@@ -44,5 +46,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :content, :image,
                                  :password_confirmation)
+  end
+  def check_user
+    if current_user != @user
+      flash[:notice] = '他のユーザーは見れません'
+      redirect_to pictures_path 
+    end
   end
 end
